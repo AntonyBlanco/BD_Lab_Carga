@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.group55.bd_lab;
+package com.group55.bd_lab.controllers;
 
+import com.group55.bd_lab.models.TamanhoPizza;
+import com.group55.bd_lab.views.TamanhoPizza_CargoPanel;
+import com.group55.bd_lab.services.TamanhoPizza_Service;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;

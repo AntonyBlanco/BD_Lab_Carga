@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.group55.bd_lab;
+package com.group55.bd_lab.views;
 
+import com.group55.bd_lab.models.TamanhoPizza;
+import com.group55.bd_lab.controllers.TamanhoPizza_Cargo;
 import java.lang.reflect.Field;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
