@@ -4,6 +4,7 @@
 
 package com.group55.bd_lab;
 
+import com.group55.bd_lab.controllers.TamanhoPizza_Cargo;
 import java.awt.Font;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
