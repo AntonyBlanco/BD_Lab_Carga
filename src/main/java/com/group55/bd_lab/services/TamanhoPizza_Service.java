@@ -53,7 +53,7 @@ public class TamanhoPizza_Service {
         return list;
     }
     public static TamanhoPizza getById(int nro_TamanhoPizza){
-        TamanhoPizza tamanhoPizza = null;
+        TamanhoPizza entidad = null;
         try {
             // Connect to the database
             
@@ -78,7 +78,7 @@ public class TamanhoPizza_Service {
                     entidadRow.descripcion = resultSet.getString("descripcion");
                     entidadRow.available = resultSet.getString("available");
                     
-                    tamanhoPizza = entidadRow;
+                    entidad = entidadRow;
                 }
                 
                 // Return thel element
@@ -89,7 +89,7 @@ public class TamanhoPizza_Service {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return tamanhoPizza;
+        return entidad;
     }
     public static int add(TamanhoPizza entidad){
         try {

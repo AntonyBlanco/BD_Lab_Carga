@@ -55,7 +55,7 @@ public class Articulo_Service {
         return list;
     }
     public static Articulo getById(int id_Articulo){
-        Articulo tamanhoPizza = null;
+        Articulo entidad = null;
         try {
             // Connect to the database
             
@@ -82,7 +82,7 @@ public class Articulo_Service {
                     entidadRow.tipoArticulo = resultSet.getString("tipoArticulo");
                     entidadRow.available = resultSet.getString("available");
                     
-                    tamanhoPizza = entidadRow;
+                    entidad = entidadRow;
                 }
                 
                 // Return thel element
@@ -93,7 +93,7 @@ public class Articulo_Service {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return tamanhoPizza;
+        return entidad;
     }
     public static int add(Articulo entidad){
         try {

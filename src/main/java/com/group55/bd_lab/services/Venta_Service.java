@@ -54,7 +54,7 @@ public class Venta_Service {
         return list;
     }
     public static Venta getById(int id_Venta){
-        Venta tamanhoPizza = null;
+        Venta entidad = null;
         try {
             // Connect to the database
             
@@ -80,7 +80,7 @@ public class Venta_Service {
                     entidadRow.descripcion = resultSet.getString("descripcion");
                     entidadRow.available = resultSet.getString("available");
                     
-                    tamanhoPizza = entidadRow;
+                    entidad = entidadRow;
                 }
                 
                 // Return thel element
@@ -91,7 +91,7 @@ public class Venta_Service {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return tamanhoPizza;
+        return entidad;
     }
     public static int add(Venta entidad){
         try {
