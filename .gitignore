@@ -59,4 +59,4 @@ nbdist/
 # End of https://www.toptal.com/developers/gitignore/api/netbeans,maven,java
 
 # File db.properties for database connection
-./src/main/resources/db.properties
+src/main/resources/db.properties
