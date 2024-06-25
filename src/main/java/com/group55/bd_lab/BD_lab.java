@@ -4,7 +4,7 @@
 
 package com.group55.bd_lab;
 
-import com.group55.bd_lab.controllers.TamanhoPizza_Cargo;
+import com.group55.bd_lab.controllers.*;
 import java.awt.Font;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -17,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class BD_lab {
 
     public static void main(String[] args) {
-        TamanhoPizza_Cargo tamanhoPizza_GUI = new TamanhoPizza_Cargo();
+        Articulo_Cargo tamanhoPizza_GUI = new Articulo_Cargo();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 10)); // Change the font size here

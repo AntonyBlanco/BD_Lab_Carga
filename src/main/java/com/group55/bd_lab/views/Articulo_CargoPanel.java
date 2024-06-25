@@ -4,14 +4,17 @@
  */
 package com.group55.bd_lab.views;
 
-import com.group55.bd_lab.models.TamanhoPizza;
-import com.group55.bd_lab.controllers.TamanhoPizza_Cargo;
+import com.group55.bd_lab.models.Articulo;
+import com.group55.bd_lab.controllers.Articulo_Cargo;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -21,16 +24,19 @@ import javax.swing.table.TableColumnModel;
  *
  * @author anjab
  */
-public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
-    private TamanhoPizza_Cargo gui;
+public class Articulo_CargoPanel extends javax.swing.JPanel {
+    private static final ArrayList<String> TIPOS_ARTICULOS = new ArrayList<String>(
+            Arrays.asList("Complementario", "Pizza", "Bocadito")
+    );
+    private Articulo_Cargo gui;
     
     private int selectedRow = -1;
     
     /**
-     * Creates new form TamanhoPizzaForm
+     * Creates new form ArticuloForm
      * @param gui
      */
-    public TamanhoPizza_CargoPanel(TamanhoPizza_Cargo gui) {
+    public Articulo_CargoPanel(Articulo_Cargo gui) {
         initComponents();
         
         this.gui = gui;
@@ -44,7 +50,7 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
         // Get the table model
         TableModel model = jTable_dataTable.getModel();
         
-        Field[] fields = TamanhoPizza.class.getDeclaredFields();
+        Field[] fields = Articulo.class.getDeclaredFields();
         Vector<String> attributeNames = new Vector<String>();
         
         // Add field names to the list
@@ -55,7 +61,9 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
         // Columns Names
         attributeNames.set(0, "Id");
         attributeNames.set(1, "Nombre");
-        attributeNames.set(2, "Descripcion");
+        attributeNames.set(2, "Precio");
+        attributeNames.set(3, "Tipo Articulo");
+        attributeNames.set(4, "Descripcion");
         attributeNames.set(attributeNames.size() - 1, "Estado Registro");
 
         if (model instanceof DefaultTableModel) {
@@ -95,22 +103,33 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
     public void enableForm(){
         jTextField_Nombre.setEnabled(true);
         jTextArea_Descripcion.setEnabled(true);
+        jTextField_Precio.setEnabled(true);
+        jComboBox_TipoArticulo.setEnabled(true);
     }
     public void disableForm(){
         jTextField_Nombre.setEnabled(false);
         jTextArea_Descripcion.setEnabled(false);
+        jTextField_Precio.setEnabled(false);
+        jComboBox_TipoArticulo.setEnabled(false);
     }
-    public void updateFormToEntidad(TamanhoPizza entidad){
+    public void updateFormToEntidad(Articulo entidad){
         entidad.nombre = jTextField_Nombre.getText();
         entidad.descripcion = jTextArea_Descripcion.getText();
+        entidad.precio = (int)(Double.parseDouble(jTextField_Precio.getText()) * 100);
+        entidad.tipoArticulo = (String)jComboBox_TipoArticulo.getSelectedItem();
     }
-    public void updateEntidadToForm(TamanhoPizza entidad) {
-        if(entidad.nro_TamanhoPizza == -1)
+    public void updateEntidadToForm(Articulo entidad) {
+        if(entidad.id_Articulo == -1)
             this.getjTextField_pkEntidad().setText("NEW");
         else
-            this.getjTextField_pkEntidad().setText(entidad.nro_TamanhoPizza + "");
+            this.getjTextField_pkEntidad().setText(entidad.id_Articulo + "");
+        
         this.getjTextField_Nombre().setText(entidad.nombre);
         this.getjTextArea_Descripcion().setText(entidad.descripcion);
+        this.getjTextField_Precio().setText((entidad.precio / 100.0) + "");
+        this.getjComboBox_TipoArticulo().setSelectedIndex(
+                Articulo_CargoPanel.TIPOS_ARTICULOS.indexOf(entidad.tipoArticulo)
+        );
     }
     public void unselectDataTable(){
         this.jTable_dataTable.getSelectionModel().clearSelection();
@@ -147,6 +166,11 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jTextField_pk = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField_Precio = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox_TipoArticulo = new javax.swing.JComboBox<>();
 
         jLabel1.setText("Nombre:");
 
@@ -277,6 +301,17 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setText("Precio:");
+
+        jTextField_Precio.setEnabled(false);
+
+        jLabel7.setText("s/.");
+
+        jLabel8.setText("Tipo Artículo:");
+
+        jComboBox_TipoArticulo.setModel(new javax.swing.DefaultComboBoxModel(Articulo_CargoPanel.TIPOS_ARTICULOS.toArray()));
+        jComboBox_TipoArticulo.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,25 +319,39 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane_dataTable, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-                    .addComponent(jSeparator2)
-                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField_Nombre)
-                            .addComponent(jScrollPane3))))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(1, 1, 1)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_Nombre)
+                                    .addComponent(jScrollPane3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextField_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jComboBox_TipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(567, 567, 567))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane_dataTable)
+                    .addComponent(jSeparator2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,6 +370,15 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_Precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBox_TipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -384,11 +442,15 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton_modificar;
     private javax.swing.JButton jButton_reactivar;
     private javax.swing.JButton jButton_salir;
+    private javax.swing.JComboBox<String> jComboBox_TipoArticulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane_dataTable;
     private javax.swing.JSeparator jSeparator1;
@@ -396,6 +458,7 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
     private javax.swing.JTable jTable_dataTable;
     private javax.swing.JTextArea jTextArea_Descripcion;
     private javax.swing.JTextField jTextField_Nombre;
+    private javax.swing.JTextField jTextField_Precio;
     private javax.swing.JTextField jTextField_pk;
     private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
@@ -433,11 +496,19 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
     }
     
     public JTextField getjTextField_pkEntidad() {
-        return this.jTextField_pk;
+        return jTextField_pk;
     }
     
     public JTextField getjTextField_Nombre() {
         return jTextField_Nombre;
+    }
+    
+    public JTextField getjTextField_Precio() {
+        return jTextField_Precio;
+    }
+    
+    public JComboBox getjComboBox_TipoArticulo() {
+        return jComboBox_TipoArticulo;
     }
     
     public JTextArea getjTextArea_Descripcion() {
