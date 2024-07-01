@@ -6,9 +6,9 @@ import java.util.List;
 
 public class TamanhoBocadilloDAO {
 
-    private String url = "jdbc:mysql://localhost:3306/nombre_base_de_datos";
-    private String usuario = "usuario";
-    private String contraseña = "contraseña";
+    private String url = "jdbc:mysql://localhost:3306/bd_lab";
+    private String usuario = "root";
+    private String contraseña = "admin";
 
     public List<TamanhoBocadillo> listarTamanhosBocadillo() {
         List<TamanhoBocadillo> tamanhosBocadillo = new ArrayList<>();
