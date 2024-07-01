@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `repostaje` (
 
 CREATE TABLE IF NOT EXISTS `scooter` (
   `Id_Scooter` int NOT NULL,
-  `Anho_Scooter` year DEFAULT NULL,
+  `AnhoScooter` year DEFAULT NULL,
   `Descripcion` varchar(255) DEFAULT NULL,
   `AVAILABLE` set('A','I','*') NOT NULL DEFAULT 'A',
   `CREATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

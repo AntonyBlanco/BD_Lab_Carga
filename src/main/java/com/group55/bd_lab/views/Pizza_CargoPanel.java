@@ -4,39 +4,100 @@
  */
 package com.group55.bd_lab.views;
 
-import com.group55.bd_lab.models.Scooter;
-import com.group55.bd_lab.controllers.Scooter_Cargo;
+import com.group55.bd_lab.models.Pizza;
+import com.group55.bd_lab.controllers.Pizza_Cargo;
+import com.group55.bd_lab.models.Articulo;
+import com.group55.bd_lab.models.TamanhoPizza;
+import com.group55.bd_lab.services.Articulo_Service;
+import com.group55.bd_lab.services.TamanhoPizza_Service;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import java.util.Vector;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumnModel;
 /**
  *
  * @author anjab
  */
-public class Scooter_CargoPanel extends javax.swing.JPanel {
-    private Scooter_Cargo gui;
+public class Pizza_CargoPanel extends javax.swing.JPanel {
+    
+    private Pizza_Cargo gui;
     
     private int selectedRow = -1;
     
+    // External tables
+    private ArrayList<Articulo> lista_Articulo;
+    private ArrayList<TamanhoPizza> lista_TamanhoPizza;
+    
+    private String[] listaStr_Articulo;
+    private HashMap<String, Articulo> hashLista_Str_Articulo;
+    private HashMap<Integer, String> hashLista_Id_Articulo_Str;
+    private String[] listaStr_TamanhoPizza;
+    private HashMap<String, TamanhoPizza> hashLista_Str_TamanhoPizza;
+    private HashMap<Integer, String> hashLista_Nro_TamanhoPizza_Str;
+    
+    private Object[] jComboBoxModel_Articulo;
+    private Object[] jComboBoxModel_TamanhoPizza;
+    
     /**
-     * Creates new form ScooterForm
+     * Creates new form PizzaForm
      * @param gui
      */
-    public Scooter_CargoPanel(Scooter_Cargo gui) {
+    public Pizza_CargoPanel(Pizza_Cargo gui) {
         initComponents();
         
         this.gui = gui;
         
         // Deshabilitar tabla para valores editables
         modifyTableProperties();
+        loadForaignDataTables();
+        
+    }
+    
+    private void loadForaignDataTables(){
+        // == TamanhoPizza ==
+        lista_TamanhoPizza = TamanhoPizza_Service.getList();
+        
+        hashLista_Str_TamanhoPizza = new HashMap<String, TamanhoPizza>();
+        hashLista_Nro_TamanhoPizza_Str = new HashMap<Integer, String>();
+        listaStr_TamanhoPizza = new String[lista_TamanhoPizza.size()];
+        
+        for(int i = 0; i < lista_TamanhoPizza.size(); i++){
+            TamanhoPizza entity = lista_TamanhoPizza.get(i);
+            listaStr_TamanhoPizza[i] = entity.nro_TamanhoPizza + " - " + entity.nombre;
+            hashLista_Str_TamanhoPizza.put(listaStr_TamanhoPizza[i], entity);
+            hashLista_Nro_TamanhoPizza_Str.put(entity.nro_TamanhoPizza, listaStr_TamanhoPizza[i]);
+        }
+        
+        this.jComboBoxModel_TamanhoPizza = listaStr_TamanhoPizza;
+        this.jComboBox_TamanhoPizza.setModel(new DefaultComboBoxModel(listaStr_TamanhoPizza));
+        
+        // == Articulo ==
+        lista_Articulo = Articulo_Service.getList();
+        
+        hashLista_Str_Articulo = new HashMap<String, Articulo>();
+        hashLista_Id_Articulo_Str = new HashMap<Integer, String>();
+        listaStr_Articulo = new String[lista_Articulo.size()];
+        
+        for(int i = 0; i < lista_Articulo.size(); i++){
+            Articulo entity = lista_Articulo.get(i);
+            listaStr_Articulo[i] = entity.id_Articulo + " - " + entity.nombre;
+            hashLista_Str_Articulo.put(listaStr_Articulo[i], entity);
+            hashLista_Id_Articulo_Str.put(entity.id_Articulo, listaStr_Articulo[i]);
+        }
+        
+        this.jComboBoxModel_Articulo = listaStr_Articulo;
+        this.jComboBox_Articulo.setModel(new DefaultComboBoxModel(listaStr_Articulo));
         
     }
     
@@ -44,7 +105,7 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
         // Get the table model
         TableModel model = jTable_dataTable.getModel();
         
-        Field[] fields = Scooter.class.getDeclaredFields();
+        Field[] fields = Pizza.class.getDeclaredFields();
         Vector<String> attributeNames = new Vector<String>();
         
         // Add field names to the list
@@ -54,7 +115,7 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
         
         // Columns Names
         attributeNames.set(0, "Id");
-        attributeNames.set(1, "AnhoScooter");
+        attributeNames.set(1, "Nombre");
         attributeNames.set(2, "Descripcion");
         attributeNames.set(attributeNames.size() - 1, "Estado Registro");
 
@@ -93,24 +154,43 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
     }
     
     public void enableForm(){
-        jTextField_AnhoScooter.setEnabled(true);
-        jTextArea_Descripcion.setEnabled(true);
+        jTextField_PrecioIngrediente.setEnabled(true);
+        jComboBox_TamanhoPizza.setEnabled(true);
+        jComboBox_Articulo.setEnabled(true);
     }
     public void disableForm(){
-        jTextField_AnhoScooter.setEnabled(false);
-        jTextArea_Descripcion.setEnabled(false);
+        jTextField_PrecioIngrediente.setEnabled(false);
+        jComboBox_TamanhoPizza.setEnabled(false);
+        jComboBox_Articulo.setEnabled(false);
     }
-    public void updateFormToEntidad(Scooter entidad){
-        entidad.anhoScooter = Integer.parseInt(jTextField_AnhoScooter.getText());
-        entidad.descripcion = jTextArea_Descripcion.getText();
+    public void updateFormToEntidad(Pizza entidad){
+        entidad.precioIngrediente = (int)(Double.parseDouble(this.jTextField_PrecioIngrediente.getText()) * 100);
+        entidad.nro_TamanhoPizza = this.hashLista_Str_TamanhoPizza.get(
+                jComboBox_TamanhoPizza.getSelectedItem()
+        ).nro_TamanhoPizza;
+        entidad.id_Articulo = this.hashLista_Str_Articulo.get(
+                jComboBox_Articulo.getSelectedItem()
+        ).id_Articulo;
     }
-    public void updateEntidadToForm(Scooter entidad) {
-        if(entidad.id_Scooter == -1)
+    public void updateEntidadToForm(Pizza entidad) {
+        if(entidad.id_Pizza == -1)
             this.getjTextField_pkEntidad().setText("NEW");
         else
-            this.getjTextField_pkEntidad().setText(entidad.id_Scooter + "");
-        this.getjTextField_AnhoScooter().setText(entidad.anhoScooter + "");
-        this.getjTextArea_Descripcion().setText(entidad.descripcion);
+            this.getjTextField_pkEntidad().setText(entidad.id_Pizza + "");
+        
+        jTextField_PrecioIngrediente.setText((double)0 + "");
+        if(entidad.nro_TamanhoPizza == -1)
+            jComboBox_TamanhoPizza.setSelectedIndex(0);
+        else
+            jComboBox_TamanhoPizza.setSelectedItem(
+                    this.hashLista_Nro_TamanhoPizza_Str.get(entidad.nro_TamanhoPizza)
+            );
+        if(entidad.nro_TamanhoPizza == -1)
+            jComboBox_Articulo.setSelectedIndex(0);
+        else
+            jComboBox_Articulo.setSelectedItem(
+                    this.hashLista_Id_Articulo_Str.get(entidad.id_Articulo)
+            );
     }
     public void unselectDataTable(){
         this.jTable_dataTable.getSelectionModel().clearSelection();
@@ -125,11 +205,10 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField_AnhoScooter = new javax.swing.JTextField();
+        jTextField_PrecioIngrediente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         panel1 = new java.awt.Panel();
         jButton_adicionar = new javax.swing.JButton();
@@ -140,26 +219,28 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
         jButton_reactivar = new javax.swing.JButton();
         jButton_actualizar = new javax.swing.JButton();
         jButton_salir = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea_Descripcion = new javax.swing.JTextArea();
         jScrollPane_dataTable = new javax.swing.JScrollPane();
         jTable_dataTable = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jTextField_pk = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox_TamanhoPizza = new javax.swing.JComboBox<>();
+        jComboBox_Articulo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setText("Año Scooter:");
-
-        jLabel2.setText("Descripción:");
+        jLabel2.setText("Tamaño de Pizza:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Tabla de Datos");
 
-        jTextField_AnhoScooter.setEnabled(false);
+        jTextField_PrecioIngrediente.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Registro de Datos");
 
+        panel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         panel1.setLayout(new java.awt.GridLayout(2, 0, 5, 5));
 
         jButton_adicionar.setText("Adicionar");
@@ -238,11 +319,6 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
         });
         panel1.add(jButton_salir);
 
-        jTextArea_Descripcion.setColumns(20);
-        jTextArea_Descripcion.setRows(5);
-        jTextArea_Descripcion.setEnabled(false);
-        jScrollPane3.setViewportView(jTextArea_Descripcion);
-
         jTable_dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -277,6 +353,16 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setText("<html>Precio por<br>Ingrediente:</html>");
+
+        jLabel7.setText("Articulo");
+
+        jComboBox_TamanhoPizza.setEnabled(false);
+
+        jComboBox_Articulo.setEnabled(false);
+
+        jLabel1.setText("s/.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,26 +370,37 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane_dataTable, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
-                    .addComponent(jSeparator2)
-                    .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
+                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane_dataTable, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+                            .addComponent(jSeparator2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_AnhoScooter, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(84, 84, 84)
+                                        .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBox_TamanhoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBox_Articulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextField_PrecioIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,13 +412,19 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField_AnhoScooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_PrecioIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_TamanhoPizza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBox_Articulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,18 +488,20 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton_modificar;
     private javax.swing.JButton jButton_reactivar;
     private javax.swing.JButton jButton_salir;
+    private javax.swing.JComboBox<String> jComboBox_Articulo;
+    private javax.swing.JComboBox<String> jComboBox_TamanhoPizza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane_dataTable;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable_dataTable;
-    private javax.swing.JTextArea jTextArea_Descripcion;
-    private javax.swing.JTextField jTextField_AnhoScooter;
+    private javax.swing.JTextField jTextField_PrecioIngrediente;
     private javax.swing.JTextField jTextField_pk;
     private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
@@ -437,16 +542,27 @@ public class Scooter_CargoPanel extends javax.swing.JPanel {
         return this.jTextField_pk;
     }
     
-    public JTextField getjTextField_AnhoScooter() {
-        return jTextField_AnhoScooter;
+    public JTextField getjTextField_PrecioIngrediente() {
+        return jTextField_PrecioIngrediente;
     }
     
-    public JTextArea getjTextArea_Descripcion() {
-        return jTextArea_Descripcion;
+    public JComboBox getjComboBox_TamanhoPizza() {
+        return jComboBox_TamanhoPizza;
+    }
+    
+    public JComboBox getjComboBox_Articulo() {
+        return jComboBox_Articulo;
     }
     
     public JTable getjTable_DataTable() {
         return jTable_dataTable;
+    }
+
+    private ComboBoxModel get_jComboBoxModel_Articulo(){
+        return new DefaultComboBoxModel(this.jComboBoxModel_Articulo);
+    }
+    private ComboBoxModel get_jComboBoxModel_TamanhoPizza(){
+        return new DefaultComboBoxModel(this.jComboBoxModel_TamanhoPizza);
     }
 
 }
