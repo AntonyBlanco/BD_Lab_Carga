@@ -93,28 +93,68 @@ public class PizzeriaCargo extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
         jButton_TamanhoPizza.setText("Tamaños Pizza");
+        jButton_TamanhoPizza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TamanhoPizzaActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_TamanhoPizza);
 
         jButton_TamanhoBocadillo.setText("Tamaños Bocadillo");
+        jButton_TamanhoBocadillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TamanhoBocadilloActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_TamanhoBocadillo);
 
         jButton_Articulo.setText("Artículos");
         jButton_Articulo.setToolTipText("");
+        jButton_Articulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ArticuloActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_Articulo);
 
         jButton_Ingrediente.setText("Ingredientes");
+        jButton_Ingrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_IngredienteActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_Ingrediente);
 
         jButton_Venta.setText("Ventas");
+        jButton_Venta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_VentaActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_Venta);
 
         jButton_Scooter.setText("Scooters");
+        jButton_Scooter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ScooterActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_Scooter);
 
         jButton_TipoPedido.setText("Tipos Pedido");
+        jButton_TipoPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TipoPedidoActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_TipoPedido);
 
         jButton_Cliente.setText("Clientes");
+        jButton_Cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ClienteActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton_Cliente);
 
         jLabel3.setText("Tablas de Datos");
@@ -122,9 +162,19 @@ public class PizzeriaCargo extends javax.swing.JFrame {
         jPanel4.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
         jButton_Pizza.setText("Pizzas");
+        jButton_Pizza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_PizzaActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton_Pizza);
 
         jButton_Bocadillo.setText("Bocadillos");
+        jButton_Bocadillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_BocadilloActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton_Bocadillo);
 
         jButton_ProductoEstrella.setText("Productos Estrella");
@@ -136,12 +186,27 @@ public class PizzeriaCargo extends javax.swing.JFrame {
         jPanel4.add(jButton_ProductoEstrella);
 
         jButton_Repostaje.setText("Repostajes");
+        jButton_Repostaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RepostajeActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton_Repostaje);
 
         jButton_Repartidor.setText("Repartidores");
+        jButton_Repartidor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RepartidorActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton_Repartidor);
 
         jButton_Pedido.setText("Pedidos");
+        jButton_Pedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_PedidoActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton_Pedido);
 
         jLabel4.setText("Tablas Interrelacionales");
@@ -149,18 +214,43 @@ public class PizzeriaCargo extends javax.swing.JFrame {
         jPanel5.setLayout(new java.awt.GridLayout(0, 2, 5, 5));
 
         jButton_Pizza_Ingrediente.setText("Pizza - Ingrediente");
+        jButton_Pizza_Ingrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Pizza_IngredienteActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton_Pizza_Ingrediente);
 
         jButton_Bocadillo_Ingrediente.setText("Bocadillo - Ingrediente");
+        jButton_Bocadillo_Ingrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Bocadillo_IngredienteActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton_Bocadillo_Ingrediente);
 
         jButton_Venta_Articulo.setText("Venta - Artículo");
+        jButton_Venta_Articulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Venta_ArticuloActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton_Venta_Articulo);
 
         jButton_ProductoEstrella_Ingrediente.setText("Producto Estrella - Ingrediente");
+        jButton_ProductoEstrella_Ingrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ProductoEstrella_IngredienteActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton_ProductoEstrella_Ingrediente);
 
         jButton_Venta_Pedido.setText("Venta - Pedido");
+        jButton_Venta_Pedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_Venta_PedidoActionPerformed(evt);
+            }
+        });
         jPanel5.add(jButton_Venta_Pedido);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -220,9 +310,81 @@ public class PizzeriaCargo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton_TamanhoPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TamanhoPizzaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_TamanhoPizzaActionPerformed
+
+    private void jButton_TamanhoBocadilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TamanhoBocadilloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_TamanhoBocadilloActionPerformed
+
+    private void jButton_ArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ArticuloActionPerformed
+
+    private void jButton_IngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IngredienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_IngredienteActionPerformed
+
+    private void jButton_VentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_VentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_VentaActionPerformed
+
+    private void jButton_ScooterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ScooterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ScooterActionPerformed
+
+    private void jButton_TipoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TipoPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_TipoPedidoActionPerformed
+
+    private void jButton_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ClienteActionPerformed
+
+    private void jButton_PizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PizzaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_PizzaActionPerformed
+
+    private void jButton_BocadilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BocadilloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_BocadilloActionPerformed
+
     private void jButton_ProductoEstrellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ProductoEstrellaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ProductoEstrellaActionPerformed
+
+    private void jButton_RepostajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepostajeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_RepostajeActionPerformed
+
+    private void jButton_RepartidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RepartidorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_RepartidorActionPerformed
+
+    private void jButton_PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_PedidoActionPerformed
+
+    private void jButton_Pizza_IngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Pizza_IngredienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Pizza_IngredienteActionPerformed
+
+    private void jButton_Bocadillo_IngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Bocadillo_IngredienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Bocadillo_IngredienteActionPerformed
+
+    private void jButton_Venta_ArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Venta_ArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Venta_ArticuloActionPerformed
+
+    private void jButton_ProductoEstrella_IngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ProductoEstrella_IngredienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_ProductoEstrella_IngredienteActionPerformed
+
+    private void jButton_Venta_PedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Venta_PedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_Venta_PedidoActionPerformed
 
     /**
      * @param args the command line arguments
