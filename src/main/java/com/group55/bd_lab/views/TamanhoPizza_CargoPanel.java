@@ -5,6 +5,8 @@
 package com.group55.bd_lab.views;
 
 import com.group55.bd_lab.models.TamanhoPizza;
+import com.group55.bd_lab.controllers.Cliente;
+import com.group55.bd_lab.controllers.TamanhoBocadillo;
 import com.group55.bd_lab.controllers.TamanhoPizza_Cargo;
 import java.lang.reflect.Field;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +32,7 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
      * Creates new form TamanhoPizzaForm
      * @param gui
      */
+    
     public TamanhoPizza_CargoPanel(TamanhoPizza_Cargo gui) {
         initComponents();
         
@@ -40,7 +43,17 @@ public class TamanhoPizza_CargoPanel extends javax.swing.JPanel {
         
     }
     
-    private void modifyTableProperties() {
+
+	public TamanhoPizza_CargoPanel(Cliente cliente) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public TamanhoPizza_CargoPanel(TamanhoBocadillo tamanhoBocadillo) {
+		// TODO Auto-generated constructor stub
+	}
+
+	private void modifyTableProperties() {
         // Get the table model
         TableModel model = jTable_dataTable.getModel();
         
