@@ -4,8 +4,8 @@
  */
 package com.group55.bd_lab.views;
 
-import com.group55.bd_lab.models.Venta;
-import com.group55.bd_lab.controllers.Venta_Cargo;
+import com.group55.bd_lab.models.TamanhoBocadillo;
+import com.group55.bd_lab.controllers.TamanhoBocadillo_Cargo;
 import java.lang.reflect.Field;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -21,16 +21,16 @@ import javax.swing.table.TableColumnModel;
  *
  * @author anjab
  */
-public class Venta_CargoPanel extends javax.swing.JPanel {
-    private Venta_Cargo gui;
+public class TamanhoBocadillo_CargoPanel extends javax.swing.JPanel {
+    private TamanhoBocadillo_Cargo gui;
     
     private int selectedRow = -1;
     
     /**
-     * Creates new form VentaForm
+     * Creates new form TamanhoBocadilloForm
      * @param gui
      */
-    public Venta_CargoPanel(Venta_Cargo gui) {
+    public TamanhoBocadillo_CargoPanel(TamanhoBocadillo_Cargo gui) {
         initComponents();
         
         this.gui = gui;
@@ -44,7 +44,7 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
         // Get the table model
         TableModel model = jTable_dataTable.getModel();
         
-        Field[] fields = Venta.class.getDeclaredFields();
+        Field[] fields = TamanhoBocadillo.class.getDeclaredFields();
         Vector<String> attributeNames = new Vector<String>();
         
         // Add field names to the list
@@ -54,9 +54,8 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
         
         // Columns Names
         attributeNames.set(0, "Id");
-        attributeNames.set(1, "Fecha");
-        attributeNames.set(2, "Total");
-        attributeNames.set(3, "Descripcion");
+        attributeNames.set(1, "Nombre");
+        attributeNames.set(2, "Descripcion");
         attributeNames.set(attributeNames.size() - 1, "Estado Registro");
 
         if (model instanceof DefaultTableModel) {
@@ -81,8 +80,6 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
             columnModel.getColumn(0).setMaxWidth(30);
             columnModel.getColumn(1).setPreferredWidth(100);
             columnModel.getColumn(1).setMaxWidth(100);
-            columnModel.getColumn(2).setPreferredWidth(75);
-            columnModel.getColumn(2).setMaxWidth(100);
             columnModel.getColumn(attributeNames.size() - 1).setPreferredWidth(90);
             columnModel.getColumn(attributeNames.size() - 1).setMaxWidth(90);
             
@@ -96,27 +93,23 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
     }
     
     public void enableForm(){
-        jTextField_Fecha.setEnabled(true);
-        jTextField_Total.setEnabled(true);
+        jTextField_Nombre.setEnabled(true);
         jTextArea_Descripcion.setEnabled(true);
     }
     public void disableForm(){
-        jTextField_Fecha.setEnabled(false);
-        jTextField_Total.setEnabled(false);
+        jTextField_Nombre.setEnabled(false);
         jTextArea_Descripcion.setEnabled(false);
     }
-    public void updateFormToEntidad(Venta entidad){
-        entidad.fecha = jTextField_Fecha.getText();
-        entidad.total = (int)(Double.parseDouble(jTextField_Total.getText()) / 100);
+    public void updateFormToEntidad(TamanhoBocadillo entidad){
+        entidad.nombre = jTextField_Nombre.getText();
         entidad.descripcion = jTextArea_Descripcion.getText();
     }
-    public void updateEntidadToForm(Venta entidad) {
-        if(entidad.id_Venta == -1)
+    public void updateEntidadToForm(TamanhoBocadillo entidad) {
+        if(entidad.nro_TamanhoBocadillo == -1)
             this.getjTextField_pkEntidad().setText("NEW");
         else
-            this.getjTextField_pkEntidad().setText(entidad.id_Venta + "");
-        this.getjTextField_Fecha().setText(entidad.fecha);
-        this.getjTextField_Total().setText((entidad.total / 100.0) + "");
+            this.getjTextField_pkEntidad().setText(entidad.nro_TamanhoBocadillo + "");
+        this.getjTextField_Nombre().setText(entidad.nombre);
         this.getjTextArea_Descripcion().setText(entidad.descripcion);
     }
     public void unselectDataTable(){
@@ -136,7 +129,7 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField_Fecha = new javax.swing.JTextField();
+        jTextField_Nombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         panel1 = new java.awt.Panel();
         jButton_adicionar = new javax.swing.JButton();
@@ -154,17 +147,15 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jTextField_pk = new javax.swing.JTextField();
-        jTextField_Total = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
 
-        jLabel1.setText("Fecha:");
+        jLabel1.setText("Nombre:");
 
         jLabel2.setText("Descripción:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Tabla de Datos");
 
-        jTextField_Fecha.setEnabled(false);
+        jTextField_Nombre.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Registro de Datos");
@@ -286,10 +277,6 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
             }
         });
 
-        jTextField_Total.setEnabled(false);
-
-        jLabel6.setText("Total:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -310,16 +297,11 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
                             .addComponent(jLabel5))
                         .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextField_pk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField_Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jTextField_Nombre)
+                            .addComponent(jScrollPane3))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -334,9 +316,7 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField_Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField_Total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -409,15 +389,13 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane_dataTable;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable_dataTable;
     private javax.swing.JTextArea jTextArea_Descripcion;
-    private javax.swing.JTextField jTextField_Fecha;
-    private javax.swing.JTextField jTextField_Total;
+    private javax.swing.JTextField jTextField_Nombre;
     private javax.swing.JTextField jTextField_pk;
     private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
@@ -458,12 +436,8 @@ public class Venta_CargoPanel extends javax.swing.JPanel {
         return this.jTextField_pk;
     }
     
-    public JTextField getjTextField_Fecha() {
-        return jTextField_Fecha;
-    }
-    
-    public JTextField getjTextField_Total() {
-        return jTextField_Total;
+    public JTextField getjTextField_Nombre() {
+        return jTextField_Nombre;
     }
     
     public JTextArea getjTextArea_Descripcion() {

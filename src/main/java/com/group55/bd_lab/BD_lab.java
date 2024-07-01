@@ -17,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class BD_lab {
 
     public static void main(String[] args) {
-        PizzeriaCargo tamanhoPizza_GUI = new PizzeriaCargo();
+        Venta_Cargo tamanhoPizza_GUI = new Venta_Cargo();
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 10)); // Change the font size here

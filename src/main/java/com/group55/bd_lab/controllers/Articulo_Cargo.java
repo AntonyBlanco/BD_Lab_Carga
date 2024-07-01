@@ -46,7 +46,7 @@ public class Articulo_Cargo extends JFrame {
         this.formularioPanel = new Articulo_CargoPanel(this);
         this.add(formularioPanel);
         this.pack();
-        this.setTitle("Cargo - Tamaño Pizza");
+        this.setTitle("Cargo - Artículo");
         this.setLocationRelativeTo(null); // Screen center
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

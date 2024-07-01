@@ -4,15 +4,10 @@
  */
 package com.group55.bd_lab.controllers;
 
-import com.group55.bd_lab.models.Articulo;
-import com.group55.bd_lab.models.Pizza;
-import com.group55.bd_lab.models.TamanhoPizza;
-import com.group55.bd_lab.services.Articulo_Service;
-import com.group55.bd_lab.views.Pizza_CargoPanel;
-import com.group55.bd_lab.services.Pizza_Service;
-import com.group55.bd_lab.services.TamanhoPizza_Service;
+import com.group55.bd_lab.models.TamanhoBocadillo;
+import com.group55.bd_lab.views.TamanhoBocadillo_CargoPanel;
+import com.group55.bd_lab.services.TamanhoBocadillo_Service;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
@@ -21,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author anjab
  */
-public class Pizza_Cargo extends JFrame {
+public class TamanhoBocadillo_Cargo extends JFrame {
 
-    private ArrayList<Pizza> listaDatos;
-    private Pizza_CargoPanel formularioPanel;
-    private Pizza entityLoadedForm;
+    private ArrayList<TamanhoBocadillo> listaDatos;
+    private TamanhoBocadillo_CargoPanel formularioPanel;
+    private TamanhoBocadillo entityLoadedForm;
 
     private int idx_selected = -1; // idx from listaDatos
     
@@ -39,8 +34,8 @@ public class Pizza_Cargo extends JFrame {
     private static final int DELETE_STATE = 5;
     private static final int HOVER_STATE = 6;
 
-    public Pizza_Cargo() {
-        this.entityLoadedForm = new Pizza();
+    public TamanhoBocadillo_Cargo() {
+        this.entityLoadedForm = new TamanhoBocadillo();
         
         this.setupJFrame();
         this.loadDataTable();
@@ -48,32 +43,31 @@ public class Pizza_Cargo extends JFrame {
     }
 
     private void setupJFrame() {
-        this.formularioPanel = new Pizza_CargoPanel(this);
+        this.formularioPanel = new TamanhoBocadillo_CargoPanel(this);
         this.add(formularioPanel);
         this.pack();
-        this.setTitle("Cargo - Pizza");
+        this.setTitle("Cargo - Tamaño Bocadillo");
         this.setLocationRelativeTo(null); // Screen center
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void loadDataTable() {
-        listaDatos = Pizza_Service.getList();
+        listaDatos = TamanhoBocadillo_Service.getList();
 
         this.setDataList(listaDatos);
     }
 
-    public void setDataList(ArrayList<Pizza> list) {
+    public void setDataList(ArrayList<TamanhoBocadillo> list) {
         // Clear jTable_dataTable
         DefaultTableModel model = (DefaultTableModel) this.formularioPanel.getjTable_DataTable().getModel();
         model.setRowCount(0);
 
         // Fill dataTable
-        for (Pizza entity : list) {
+        for (TamanhoBocadillo entity : list) {
             model.addRow(new Object[]{
-                entity.id_Pizza,
-                entity.precioIngrediente,
-                entity.nro_TamanhoPizza,
-                entity.id_Articulo,
+                entity.nro_TamanhoBocadillo,
+                entity.nombre,
+                entity.descripcion,
                 entity.available
             });
         }
@@ -81,7 +75,7 @@ public class Pizza_Cargo extends JFrame {
 
     public void adicionarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.ADD_STATE;
+        this.state = TamanhoBocadillo_Cargo.ADD_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
@@ -94,13 +88,13 @@ public class Pizza_Cargo extends JFrame {
 
     public void modificarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.UPDATE_STATE;
+        this.state = TamanhoBocadillo_Cargo.UPDATE_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
         // Query data
-        int id_selected = listaDatos.get(idx_selected).id_Pizza;
-        this.entityLoadedForm = Pizza_Service.getById(id_selected);
+        int id_selected = listaDatos.get(idx_selected).nro_TamanhoBocadillo;
+        this.entityLoadedForm = TamanhoBocadillo_Service.getById(id_selected);
         this.formularioPanel.updateEntidadToForm(this.entityLoadedForm);
 
         this.formularioPanel.enableForm();
@@ -109,28 +103,26 @@ public class Pizza_Cargo extends JFrame {
 
     private void clearDataRegistro() {
         this.formularioPanel.getjTextField_pkEntidad().setText("");
-        this.formularioPanel.getjTextField_PrecioIngrediente().setText("");
-        this.formularioPanel.getjComboBox_TamanhoPizza().setSelectedIndex(0);
-        this.formularioPanel.getjComboBox_Articulo().setSelectedIndex(0);
+        this.formularioPanel.getjTextField_Nombre().setText("");
+        this.formularioPanel.getjTextArea_Descripcion().setText("");
     }
     
     private void clearEntityLoadedForm() {
-        this.entityLoadedForm.id_Pizza = -1;
-        this.entityLoadedForm.precioIngrediente = 0;
-        this.entityLoadedForm.nro_TamanhoPizza = -1;
-        this.entityLoadedForm.id_Articulo = -1;
+        this.entityLoadedForm.nro_TamanhoBocadillo = -1;
+        this.entityLoadedForm.nombre = "";
+        this.entityLoadedForm.descripcion = "";
         this.entityLoadedForm.available = "";
     }
 
     public void eliminarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.DELETE_STATE;
+        this.state = TamanhoBocadillo_Cargo.DELETE_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
         // Query data
-        int id_selected = listaDatos.get(idx_selected).id_Pizza;
-        this.entityLoadedForm = Pizza_Service.getById(id_selected);
+        int id_selected = listaDatos.get(idx_selected).nro_TamanhoBocadillo;
+        this.entityLoadedForm = TamanhoBocadillo_Service.getById(id_selected);
         this.formularioPanel.updateEntidadToForm(this.entityLoadedForm);
 
         // Form is not enabled
@@ -139,7 +131,7 @@ public class Pizza_Cargo extends JFrame {
 
     public void cancelarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.SELECT_STATE;
+        this.state = TamanhoBocadillo_Cargo.SELECT_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
@@ -151,13 +143,13 @@ public class Pizza_Cargo extends JFrame {
 
     public void inactivarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.INACTIVATE_STATE;
+        this.state = TamanhoBocadillo_Cargo.INACTIVATE_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
         // Query data
-        int id_selected = listaDatos.get(idx_selected).id_Pizza;
-        this.entityLoadedForm = Pizza_Service.getById(id_selected);
+        int id_selected = listaDatos.get(idx_selected).nro_TamanhoBocadillo;
+        this.entityLoadedForm = TamanhoBocadillo_Service.getById(id_selected);
         this.formularioPanel.updateEntidadToForm(this.entityLoadedForm);
 
         // Form is not enabled
@@ -166,13 +158,13 @@ public class Pizza_Cargo extends JFrame {
 
     public void reactivarActionButton() {
         // Change State
-        this.state = Pizza_Cargo.ACTIVATE_STATE;
+        this.state = TamanhoBocadillo_Cargo.ACTIVATE_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
         // Query data
-        int id_selected = listaDatos.get(idx_selected).id_Pizza;
-        this.entityLoadedForm = Pizza_Service.getById(id_selected);
+        int id_selected = listaDatos.get(idx_selected).nro_TamanhoBocadillo;
+        this.entityLoadedForm = TamanhoBocadillo_Service.getById(id_selected);
         this.formularioPanel.updateEntidadToForm(this.entityLoadedForm);
 
         // Form is not enabled
@@ -186,19 +178,19 @@ public class Pizza_Cargo extends JFrame {
         // Saving data via service
         boolean success;
         switch(this.state) {
-            case Pizza_Cargo.ADD_STATE -> {
-                this.entityLoadedForm.id_Pizza = Pizza_Service.add(this.entityLoadedForm);
-                success = this.entityLoadedForm.id_Pizza != -1;
+            case TamanhoBocadillo_Cargo.ADD_STATE -> {
+                this.entityLoadedForm.nro_TamanhoBocadillo = TamanhoBocadillo_Service.add(this.entityLoadedForm);
+                success = this.entityLoadedForm.nro_TamanhoBocadillo != -1;
             }
-            case Pizza_Cargo.UPDATE_STATE -> success = Pizza_Service.updateById(this.entityLoadedForm.id_Pizza, this.entityLoadedForm);
-            case Pizza_Cargo.INACTIVATE_STATE -> success = Pizza_Service.inactivateById(this.entityLoadedForm.id_Pizza);
-            case Pizza_Cargo.ACTIVATE_STATE -> success = Pizza_Service.activateById(this.entityLoadedForm.id_Pizza);
-            case Pizza_Cargo.DELETE_STATE -> success = Pizza_Service.deleteById(this.entityLoadedForm.id_Pizza);
+            case TamanhoBocadillo_Cargo.UPDATE_STATE -> success = TamanhoBocadillo_Service.updateById(this.entityLoadedForm.nro_TamanhoBocadillo, this.entityLoadedForm);
+            case TamanhoBocadillo_Cargo.INACTIVATE_STATE -> success = TamanhoBocadillo_Service.inactivateById(this.entityLoadedForm.nro_TamanhoBocadillo);
+            case TamanhoBocadillo_Cargo.ACTIVATE_STATE -> success = TamanhoBocadillo_Service.activateById(this.entityLoadedForm.nro_TamanhoBocadillo);
+            case TamanhoBocadillo_Cargo.DELETE_STATE -> success = TamanhoBocadillo_Service.deleteById(this.entityLoadedForm.nro_TamanhoBocadillo);
             default -> success = false;
         }
 
         // Change State
-        this.state = Pizza_Cargo.SELECT_STATE;
+        this.state = TamanhoBocadillo_Cargo.SELECT_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
 
@@ -220,7 +212,7 @@ public class Pizza_Cargo extends JFrame {
         if(idx_selected == -1) return;
         
         // Change State
-        this.state = Pizza_Cargo.HOVER_STATE;
+        this.state = TamanhoBocadillo_Cargo.HOVER_STATE;
         // Enable and disable jbuttons
         enableDisableButtons();
         
@@ -241,9 +233,9 @@ public class Pizza_Cargo extends JFrame {
         this.formularioPanel.getjButton_cancelar().setEnabled(false);
         
         switch(this.state){
-            case Pizza_Cargo.HOVER_STATE:
+            case TamanhoBocadillo_Cargo.HOVER_STATE:
                 this.formularioPanel.getjButton_modificar().setEnabled(false);
-            case Pizza_Cargo.SELECT_STATE:
+            case TamanhoBocadillo_Cargo.SELECT_STATE:
                 this.formularioPanel.getjButton_adicionar().setEnabled(true);
                 break;
             default:
